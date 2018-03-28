@@ -1,0 +1,28 @@
+{
+  "name": "memrise-srs-calc",
+  "version": "1.0.0",
+  "description": "A simple package to calculate flash card review schedules on Memrise",
+  "main": "memrise-srs-calc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xferguson/memrise-src.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Alexander Ferguson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xferguson/memrise-src/issues"
+  },
+  "homepage": "https://github.com/xferguson/memrise-src#readme",
+  "dependencies": {
+    "grunt": "^1.0.2",
+    "grunt-cli": "^1.2.0",
+    "grunt-eslint": "^20.1.0",
+    "load-grunt-tasks": "^3.5.2"
+  }
+}
