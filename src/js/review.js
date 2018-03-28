@@ -9,7 +9,7 @@ class Review {
         var days = days;
         var dailyBatches = [];
         var reviewsByDay = [0];
-        
+
         class Batch {
             constructor(batchSize) {
                 this.batchSize = batchSize;
