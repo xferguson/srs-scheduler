@@ -7,9 +7,9 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
         eslint: {
             options: {
-                configFile: './eslintrc.json',
+                configFile: "./eslintrc.json",
             },
-            target: ["./Gruntfile.js", "./memrise-srs-calc.js"]
+            target: ["./Gruntfile.js", "./memrise-srs-calc.js", "./src/js/*.js"]
         },
     });
 
