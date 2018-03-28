@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* global console */
 class Review {
     constructor() {
         this.intervals = [1, 1, 6, 12, 24, 48, 96, 180];
@@ -6,7 +8,6 @@ class Review {
     getReviewSchedule(batchSize, days) {
 
         var intervals = this.intervals;
-        var days = days;
         var dailyBatches = [];
         var reviewsByDay = [0];
 
@@ -46,7 +47,7 @@ class Review {
                 reviewsByDay[i] = reviewsByDay[i] ? reviewsByDay[i] + dailyBatches[d].reviewsToday() : 0 + dailyBatches[d].reviewsToday();
                 dailyBatches[d].advanceInterval();
             }
-            console.log("Day " + (i + 1) + ": Reviews = " + reviewsByDay[i] + ", New = " + batchSize);
+            console.log("Day " + (i + 1) + ": Reviews = " + reviewsByDay[i] + ", New = " + batchSize); // eslint-disable-line no-console
         }
 
         return reviewsByDay;
