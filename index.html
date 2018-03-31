@@ -4,9 +4,30 @@
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script crossorigin src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-plotly.js@1.0.2/dist/create-plotly-component.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #4a4a4a;
+        }
+        .wrapper {
+            background-color: #ffffff;
+            margin: 0 auto;
+            padding: 20px;
+            width: 640px;
+        }
+    </style>
 </head>
 <body>
-<div id="root"></div>
+    
+    <div class="wrapper">
+        <h1>Memrise Review Calculator</h1>
+        <p>This is a tool designed to show you how many flash card reviews you can expect per day using Memrise's Spaced Repetition System. The SRS algorithm was taken from the Memrise website message boards.</p>
+        <p>The current graph is calculated using 20 new flash cards per day over the course off 90 days</p>
+        <div id="root"></div>        
+    </div>
 
 <script src="dist/js/bundle.js"></script>
     

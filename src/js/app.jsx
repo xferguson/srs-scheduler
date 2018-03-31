@@ -8,7 +8,7 @@ const Plot = createPlotlyComponent(Plotly),
     studySession = new Review();
 
 let batch = 20,
-    totalDays = 20,
+    totalDays = 90,
     studySessionReviews;
 
 // class ReviewChart extends React.Component { // eslint-disable-line no-unused-vars
@@ -36,22 +36,17 @@ studySessionReviews = studySession.getReviewSchedule(batch, totalDays);
 ReactDOM.render(
     React.createElement(Plot, {
         data: [{
-                type: "scatter",
-                mode: "lines+points",
-                x: [...Array(studySessionReviews.length).keys()],
-                y: [...studySessionReviews],
-                marker: { color: "red" }
-            },
-            {
-                type: "bar",
-                x: [...Array(studySessionReviews.length).keys()],
-                y: [...studySessionReviews]
-            }
-        ],
+            type: "bar",
+            x: [...Array(studySessionReviews.length)
+                .fill(undefined)
+                .map((item, index) => index + 1)
+            ],
+            y: [...studySessionReviews]
+        }],
         layout: {
-            width: 640,
+            width: 600,
             height: 480,
-            title: "A Flashcard Schedule"
+            title: "Review Schedule"
         }
     }),
     document.getElementById("root")
