@@ -9,9 +9,9 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
         eslint: {
             options: {
-                configFile: "./eslintrc.json"
+                configFile: "./.eslintrc"
             },
-            target: ["./Gruntfile.js", "webpack.config.js", "./memrise-srs-calc.js", "./src/js/*.js"]
+            target: ["./Gruntfile.js", "webpack.config.js", "./index.js", "./src/js/*.js", "./src/js/*.jsx"]
         },
         webpack: {
             myconfig: webpackConfig
