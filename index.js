@@ -4,12 +4,14 @@
 const Review = require("./src/js/review.js");
 
 const myArgs = process.argv.splice(2),
-	batch = parseInt(myArgs[0]),
-	totalDays = parseInt(myArgs[1]);
-let studySession;//,
-	// studySessionReviews;
+    batchSize = parseInt(myArgs[0]),
+    totalDays = parseInt(myArgs[1]);
 
-studySession = new Review();
-// studySessionReviews = studySession.getReviewSchedule(batch, totalDays);
-studySession.getReviewSchedule(batch, totalDays);
-console.log("At this rate you will learn " + (batch * totalDays) + " words in " + totalDays + " days."); // eslint-disable-line no-console
+let studySession = new Review();
+
+studySession.getReviewSchedule(batchSize, totalDays)
+    .forEach((reviews, day) => {
+        console.log("Day " + (day + 1) + ": Reviews = " + reviews + ", New = " + batchSize); // eslint-disable-line no-console
+    });
+
+console.log("At this rate you will learn " + (batchSize * totalDays) + " words in " + totalDays + " days."); // eslint-disable-line no-console
