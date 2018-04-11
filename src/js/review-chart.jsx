@@ -13,7 +13,8 @@ class ReviewChart extends React.Component {
         /* State */
         this.state = {
             batch: props.batch,
-            totalDays: props.totalDays
+            totalDays: props.totalDays,
+            intervalMode: props.intervalMode
         };
 
         /* Bindings */
@@ -50,12 +51,29 @@ class ReviewChart extends React.Component {
                 .map((item, index) => index + 1)
             ],
             plotY = [...studySessionReviews];
-        function getTotalStudied() {
+        const getTotalStudied = function() {
             const totalNew = that.state.batch * that.state.totalDays;
             return (
                     <p>At that rate, you will learn {totalNew} flash cards.</p>
                 );
-        }
+        };
+        const settingsForm = function() {
+            return (
+                <form>
+                    <label>
+                        Daily New Cards:
+                        <input type="number" min="0" max="200" value={that.state.batch} onChange={that.updateBatch} />
+                    </label>
+                    <br />
+                    <br />
+                    <label>
+                        Number of Days:
+                        <input type="number" min="0" max="730" value={that.state.totalDays} onChange={that.updateTotalDays} />
+                    </label>
+                    {getTotalStudied()}
+                </form>
+                );
+        };
 
         return ( 
             <div>
@@ -75,26 +93,15 @@ class ReviewChart extends React.Component {
                         }
                     }
                 />
-                <form>
-                    <label>
-                        Daily New Cards:
-                        <input type="number" min="0" max="200" value={that.state.batch} onChange={that.updateBatch} />
-                    </label>
-                    <br />
-                    <br />
-                    <label>
-                        Number of Days:
-                        <input type="number" min="0" max="730" value={that.state.totalDays} onChange={that.updateTotalDays} />
-                    </label>
-                    {getTotalStudied()}
-                </form>
+                {settingsForm()}
             </div>
         );
     }
 }
 ReviewChart.propTypes = {
     batch: PropTypes.number,
-    totalDays: PropTypes.number
+    totalDays: PropTypes.number,
+    intervalMode: PropTypes.string
 };
 
 export default ReviewChart;
