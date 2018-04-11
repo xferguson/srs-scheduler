@@ -1,5 +1,12 @@
 /* eslint-env node */
 class Review {
+    constructor() {
+        this.intervalModes = {
+            Memrise: [1, 1, 6, 12, 24, 48, 96, 180],
+            ClozeMaster: [1, 10, 30, 180],
+            Anki: []
+        };
+    }
     setIntervalMode(mode) {
         if (this.intervalModes.hasOwnProperty(mode)) {
             this.intervals = this.intervalModes[mode];
@@ -9,14 +16,9 @@ class Review {
     } 
 
     getReviewSchedule(batchSize, days, mode = "Memrise") {
-        const intervalModes = {
-            Memrise: [1, 1, 6, 12, 24, 48, 96, 180],
-            ClozeMaster: [],
-            Anki: []
-        };
         const getIntervals = (mode) => {
-            if (intervalModes.hasOwnProperty(mode)) {
-                return intervalModes[mode];
+            if (this.intervalModes.hasOwnProperty(mode)) {
+                return this.intervalModes[mode];
             } else {
                 return false;
             }
