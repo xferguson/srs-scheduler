@@ -54,22 +54,21 @@ class ReviewChart extends React.Component {
         });
     }
     render() {
-        const that = this;
-        const studySessionReviews = that.getSessionReviews(that.state.batch, that.state.totalDays, that.state.intervalMode),
+        const studySessionReviews = this.getSessionReviews(this.state.batch, this.state.totalDays, this.state.intervalMode),
             plotX = [...Array(studySessionReviews.length)
                 .fill(undefined)
                 .map((item, index) => index + 1)
             ],
             plotY = [...studySessionReviews];
-        const getTotalStudied = function() {
-            const totalNew = that.state.batch * that.state.totalDays;
+        const getTotalStudied = () => {
+            const totalNew = this.state.batch * this.state.totalDays;
             return (
                     <p>At that rate, you will learn {totalNew} flash cards.</p>
                 );
         };
-        const settingsForm = function() {
-            const modes = that.studySession.intervalModes;
-            const modeSwitch = function() {
+        const settingsForm = () => {
+            const modes = this.studySession.intervalModes;
+            const modeSwitch = () => {
                 const validModes = Object.keys(modes)
                     .filter((key) => modes.hasOwnProperty(key) && modes[key].length > 0);
                 return validModes.length === 1 ? null : validModes.map((mode, index) => {
@@ -79,8 +78,8 @@ class ReviewChart extends React.Component {
                                     type="radio"
                                     name="mode"
                                     value={mode}
-                                    onChange={that.updateIntervalMode}
-                                    checked={mode === that.state.intervalMode}
+                                    onChange={this.updateIntervalMode}
+                                    checked={mode === this.state.intervalMode}
                                 />{mode}
                             </div>
                         );
@@ -95,8 +94,8 @@ class ReviewChart extends React.Component {
                                 type="number"
                                 min="0"
                                 max="200"
-                                value={that.state.batch}
-                                onChange={that.updateBatch}
+                                value={this.state.batch}
+                                onChange={this.updateBatch}
                             />
                         </label>
                     </div>
@@ -107,8 +106,8 @@ class ReviewChart extends React.Component {
                                 type="number"
                                 min="0"
                                 max="730"
-                                value={that.state.totalDays}
-                                onChange={that.updateTotalDays}
+                                value={this.state.totalDays}
+                                onChange={this.updateTotalDays}
                             />
                         </label>
                     </div>
