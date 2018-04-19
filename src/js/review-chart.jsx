@@ -1,11 +1,10 @@
 /* eslint-env node, browser */
-/* global React, Plotly, createPlotlyComponent */
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Review from "./review";
+import Plot from "react-plotly.js"; 
 
-const Plot = createPlotlyComponent(Plotly);
-
-class ReviewChart extends React.Component {
+class ReviewChart extends Component {
     constructor(props) {
         super(props);
 

@@ -1,7 +1,6 @@
 /* eslint-env node, browser */
-/* global React, ReactDOM*/
-// import React from "react";
-// import Plot from "react-plotly.js"; 
+import React from "react";
+import ReactDOM from "react-dom";
 import ReviewChart from "./review-chart.jsx";
 
 let batch = 20,
