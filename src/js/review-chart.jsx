@@ -58,7 +58,9 @@ class ReviewChart extends Component {
                 .fill(undefined)
                 .map((item, index) => index + 1)
             ],
-            plotY = [...studySessionReviews];
+            plotReviewCardsY = [...studySessionReviews],
+            plotNewCardsY = [...Array(studySessionReviews.length)
+                .fill(this.state.batch)];
         const getTotalStudied = () => {
             const totalNew = this.state.batch * this.state.totalDays;
             return (
@@ -126,14 +128,22 @@ class ReviewChart extends Component {
                         [{
                             type: "bar",
                             x: plotX,
-                            y: plotY
+                            y: plotNewCardsY,
+                            name: "New Cards"
+                        },
+                        {
+                            type: "bar",
+                            x: plotX,
+                            y: plotReviewCardsY,
+                            name: "Cards to Review"
                         }]
                     }
                     layout = {
                         {
                             width: 600,
                             height: 480,
-                            title: "Review Schedule"
+                            title: "Review Schedule",
+                            barmode: "stack"
                         }
                     }
                 />
