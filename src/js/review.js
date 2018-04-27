@@ -74,4 +74,4 @@ class Review {
 
 }
 
-export default Review;
+module.exports = Review;
