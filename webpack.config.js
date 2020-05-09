@@ -2,6 +2,7 @@
 const path = require("path");
 
 const config = {
+    mode: "production",
     entry: ["./src/js/app.jsx"],
     output: {
         path: path.resolve(__dirname, "dist/js"),
