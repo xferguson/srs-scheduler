@@ -14,7 +14,7 @@ const config = {
             exclude: /node_modules/,
             loader: "babel-loader",
             query: {
-                presets: ["env", "es2015", "react"]
+                presets: ["env", "react"]
             }
         }]
     }
