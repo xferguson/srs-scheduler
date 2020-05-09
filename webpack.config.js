@@ -6,7 +6,8 @@ const config = {
     entry: ["./src/js/app.jsx"],
     output: {
         path: path.resolve(__dirname, "dist/js"),
-        filename: "bundle.js"
+        filename: "bundle.js",
+        chunkFilename: "vendors.js"
     },
     module: {
         rules: [{
@@ -17,6 +18,14 @@ const config = {
                 presets: ["env", "react"]
             }
         }]
+    },
+    optimization: {
+        splitChunks: {
+            chunks: "all"
+        }
+    },
+    performance: {
+        hints: false
     }
 };
 
