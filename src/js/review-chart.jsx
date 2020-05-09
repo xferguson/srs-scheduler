@@ -1,8 +1,11 @@
 /* eslint-env node, browser */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Review from "./review";
 import Plot from "react-plotly.js"; 
+import { getReviewSchedule } from "./review";
+import { intervalModes } from "./constants.js";
+
+const parseToNumber = (val) => isNaN(parseInt(val, 10)) ? null : parseInt(val, 10);
 
 class ReviewChart extends Component {
     constructor(props) {
@@ -16,32 +19,20 @@ class ReviewChart extends Component {
         };
 
         /* Bindings */
-        this.getSessionReviews = this.getSessionReviews.bind(this);
         this.updateBatch = this.updateBatch.bind(this);
         this.updateTotalDays = this.updateTotalDays.bind(this);
         this.updateIntervalMode = this.updateIntervalMode.bind(this);
 
-        /* Resources */
-        this.studySession = new Review();
-
-    }
-    getSessionReviews(batch, totalDays, intervalMode) {
-        return this.studySession.getReviewSchedule(batch, totalDays, intervalMode);
     }
 
-    parseToNumber(val) {
-        // Current stopgap helper for an issue with numbers being rendered as strings
-        // Found in this thread: https://github.com/erikras/redux-form/issues/2940
-        return isNaN(parseInt(val, 10)) ? null : parseInt(val, 10);
-    }
     updateBatch(event) {
-        const newBatch = this.parseToNumber(event.target.value);
+        const newBatch = parseToNumber(event.target.value);
         this.setState({
             batch: newBatch
         });
     }
     updateTotalDays(event) {
-        const newTotalDays = this.parseToNumber(event.target.value);
+        const newTotalDays = parseToNumber(event.target.value);
         this.setState({
             totalDays: newTotalDays
         });
@@ -53,7 +44,7 @@ class ReviewChart extends Component {
         });
     }
     render() {
-        const studySessionReviews = this.getSessionReviews(this.state.batch, this.state.totalDays, this.state.intervalMode),
+        const studySessionReviews = getReviewSchedule(this.state.batch, this.state.totalDays, this.state.intervalMode),
             plotX = [...Array(studySessionReviews.length)
                 .fill(undefined)
                 .map((item, index) => index + 1)
@@ -61,18 +52,11 @@ class ReviewChart extends Component {
             plotReviewCardsY = [...studySessionReviews],
             plotNewCardsY = [...Array(studySessionReviews.length)
                 .fill(this.state.batch)];
-        const getTotalStudied = () => {
-            const totalNew = this.state.batch * this.state.totalDays;
-            return (
-                    <p>At that rate, you will learn {totalNew} flash cards.</p>
-                );
-        };
         const settingsForm = () => {
-            const modes = this.studySession.intervalModes;
             const modeSwitch = () => {
-                const validModes = Object.keys(modes)
-                    .filter((key) => modes.hasOwnProperty(key) && modes[key].length > 0);
-                return validModes.length === 1 ? null : validModes.map((mode, index) => {
+                const validModes = Object.keys(intervalModes)
+                    .filter((key) => intervalModes.hasOwnProperty(key) && intervalModes[key].length > 0);
+                return validModes.length > 1 && validModes.map((mode, index) => {
                         return (
                             <div key={index}>
                                 <input
@@ -116,7 +100,7 @@ class ReviewChart extends Component {
                         Scheduling Mode:
                         {modeSwitch()}
                     </label>
-                    {getTotalStudied()}
+                    <p>At that rate, you will learn {this.state.batch * this.state.totalDays} flash cards.</p>
                 </form>
             );
         };
