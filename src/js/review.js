@@ -2,7 +2,7 @@
 import Card from "./card.js";
 import { intervalModes } from "./constants.js";
 
-export const getReviewSchedule = (batchSize, days, mode = "Memrise") => {
+export const getReviewSchedule = (batchSize, days, errorRate, mode = "Memrise") => {
     const intervals = intervalModes.hasOwnProperty(mode) && intervalModes[mode];
     if (intervals) {
         let dailyCards = [];
@@ -17,7 +17,7 @@ export const getReviewSchedule = (batchSize, days, mode = "Memrise") => {
                 if (card.reviewToday()) {
                     reviewsByDay[i]++;
                 }
-                card.advanceInterval();
+                card.advanceInterval(errorRate);
             });
         }
 

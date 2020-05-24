@@ -5,12 +5,14 @@ import ReviewChart from "./review-chart.jsx";
 
 const batch = 20,
     totalDays = 90,
+    errorRate = 0,
     intervalMode = "Memrise";
 
 ReactDOM.render(
     <ReviewChart
         batch={batch}
         totalDays={totalDays}
+        errorRate={errorRate}
         intervalMode={intervalMode}
     />,
     document.getElementById("root")

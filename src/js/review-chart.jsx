@@ -15,12 +15,14 @@ class ReviewChart extends Component {
         this.state = {
             batch: props.batch,
             totalDays: props.totalDays,
+            errorRate: props.errorRate,
             intervalMode: props.intervalMode
         };
 
         /* Bindings */
         this.updateBatch = this.updateBatch.bind(this);
         this.updateTotalDays = this.updateTotalDays.bind(this);
+        this.updateErrorRate = this.updateErrorRate.bind(this);
         this.updateIntervalMode = this.updateIntervalMode.bind(this);
 
     }
@@ -37,6 +39,12 @@ class ReviewChart extends Component {
             totalDays: newTotalDays
         });
     }
+    updateErrorRate(event) {
+        const newErrorRate = parseToNumber(event.target.value);
+        this.setState({
+            errorRate: newErrorRate
+        });
+    }
     updateIntervalMode(event) {
         const newIntervalMode = event.target.value;
         this.setState({
@@ -44,7 +52,7 @@ class ReviewChart extends Component {
         });
     }
     render() {
-        const studySessionReviews = getReviewSchedule(this.state.batch, this.state.totalDays, this.state.intervalMode),
+        const studySessionReviews = getReviewSchedule(this.state.batch, this.state.totalDays, this.state.errorRate, this.state.intervalMode),
             plotX = [...Array(studySessionReviews.length)
                 .fill(undefined)
                 .map((item, index) => index + 1)
@@ -96,7 +104,18 @@ class ReviewChart extends Component {
                             />
                         </label>
                     </div>
-                    <label>
+                    <div>
+                        <label>
+                            Error Rate (% of cards wrong per day):
+                            <input
+                                type="number"
+                                min="0"
+                                max="100"
+                                value={this.state.errorRate}
+                                onChange={this.updateErrorRate}
+                            />
+                        </label>
+                    </div>                    <label>
                         Scheduling Mode:
                         {modeSwitch()}
                     </label>
@@ -139,6 +158,7 @@ class ReviewChart extends Component {
 ReviewChart.propTypes = {
     batch: PropTypes.number,
     totalDays: PropTypes.number,
+    errorRate: PropTypes.number,
     intervalMode: PropTypes.string
 };
 

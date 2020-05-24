@@ -10,12 +10,12 @@ class Card {
         return this.daysUntilReview === 0;
     }
 
-    advanceInterval() {
+    advanceInterval(errorRate) {
         if (this.daysUntilReview > 0) {
             this.daysUntilReview--;
         } else {
+            this.interval = Math.random() * 100 < errorRate ? 0 : this.interval + 1;
             if (this.interval < this.intervals.length) {
-                this.interval++;
                 this.daysUntilReview = this.intervals[this.interval];
             } else {
                 this.daysUntilReview = this.intervals[this.intervals.length - 1];
