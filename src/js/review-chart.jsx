@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Plot from "react-plotly.js"; 
-import { getReviewSchedule } from "./review";
+import getReviewSchedule from "./review";
 import { intervalModes } from "./constants.js";
 
 const parseToNumber = (val) => isNaN(parseInt(val, 10)) ? null : parseInt(val, 10);
@@ -52,7 +52,12 @@ class ReviewChart extends Component {
         });
     }
     render() {
-        const studySessionReviews = getReviewSchedule(this.state.batch, this.state.totalDays, this.state.errorRate, this.state.intervalMode),
+        const studySessionReviews = getReviewSchedule({
+                batchSize: this.state.batch,
+                totalDays: this.state.totalDays,
+                errorRate: this.state.errorRate,
+                intervalMode: this.state.intervalMode
+            }),
             plotX = studySessionReviews
                 .map((item, index) => index + 1),
             plotReviewCardsY = studySessionReviews,
@@ -117,7 +122,7 @@ class ReviewChart extends Component {
                         Scheduling Mode:
                         {modeSwitch()}
                     </label>
-                    <p>At that rate, you will learn {this.state.batch * this.state.totalDays} flash cards.</p>
+                    <p>At that rate, you will learn {this.state.batch * this.state.totalDays} new cards.</p>
                 </form>
             );
         };

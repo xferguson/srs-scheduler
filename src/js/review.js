@@ -1,14 +1,16 @@
 /* eslint-env node */
-import Card from "./card.js";
-import { intervalModes } from "./constants.js";
+const Card = require("./card.js");
 
-export const getReviewSchedule = (batchSize, days, errorRate, mode = "Memrise") => {
-    const intervals = intervalModes.hasOwnProperty(mode) && intervalModes[mode];
+const CONSTANTS = require("./constants.js");
+const intervalModes = CONSTANTS.intervalModes;
+
+const getReviewSchedule = ({batchSize = 20, totalDays = 90, errorRate = 0, intervalMode = "Memrise"}) => {
+    const intervals = intervalModes.hasOwnProperty(intervalMode) && intervalModes[intervalMode];
     if (intervals) {
         let dailyCards = [];
         let reviewsByDay = [0];
 
-        for (let i = 0; i < days; i++) {
+        for (let i = 0; i < totalDays; i++) {
             reviewsByDay[i] = 0;
             for (let j = 0; j < batchSize; j++) {
                 dailyCards.push(new Card(intervals));
@@ -26,3 +28,5 @@ export const getReviewSchedule = (batchSize, days, errorRate, mode = "Memrise") 
         return false;
     }
 };
+
+module.exports = getReviewSchedule;
