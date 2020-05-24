@@ -3,14 +3,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import ReviewChart from "./review-chart.jsx";
 
-const batch = 20,
+const batchSize = 20,
     totalDays = 90,
     errorRate = 0,
     intervalMode = "Memrise";
 
 ReactDOM.render(
     <ReviewChart
-        batch={batch}
+        batchSize={batchSize}
         totalDays={totalDays}
         errorRate={errorRate}
         intervalMode={intervalMode}

@@ -6,9 +6,9 @@ const intervalModes = CONSTANTS.intervalModes;
 
 const getReviewSchedule = ({batchSize = 20, totalDays = 90, errorRate = 0, intervalMode = "Memrise"}) => {
     const intervals = intervalModes.hasOwnProperty(intervalMode) && intervalModes[intervalMode];
+    let reviewsByDay = [0];
     if (intervals) {
         let dailyCards = [];
-        let reviewsByDay = [0];
 
         for (let i = 0; i < totalDays; i++) {
             reviewsByDay[i] = 0;
@@ -22,11 +22,16 @@ const getReviewSchedule = ({batchSize = 20, totalDays = 90, errorRate = 0, inter
                 card.advanceInterval(errorRate);
             });
         }
-
-        return reviewsByDay;
-    } else {
-        return false;
     }
+    return reviewsByDay;
 };
 
-module.exports = getReviewSchedule;
+const getResultString = (batchSize, totalDays) => `At this rate you will learn ${batchSize * totalDays} new cards in ${totalDays} day${totalDays === 1 ? "" : "s"}.`;
+
+const getMaxReviewString = (maxReviews, errorRate) =>`Your busiest review day will contain ${maxReviews} card${maxReviews === 1 ? "" : "s"}.${errorRate > 0 ? " (approximation)" : ""}`;
+
+module.exports = {
+    getReviewSchedule,
+    getResultString,
+    getMaxReviewString
+};

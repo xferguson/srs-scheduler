@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Plot from "react-plotly.js"; 
-import getReviewSchedule from "./review";
+import reviews from "./review";
 import { intervalModes } from "./constants.js";
 
 const parseToNumber = (val) => isNaN(parseInt(val, 10)) ? null : parseInt(val, 10);
@@ -13,7 +13,7 @@ class ReviewChart extends Component {
 
         /* State */
         this.state = {
-            batch: props.batch,
+            batchSize: props.batchSize,
             totalDays: props.totalDays,
             errorRate: props.errorRate,
             intervalMode: props.intervalMode
@@ -30,7 +30,7 @@ class ReviewChart extends Component {
     updateBatch(event) {
         const newBatch = parseToNumber(event.target.value);
         this.setState({
-            batch: newBatch
+            batchSize: newBatch
         });
     }
     updateTotalDays(event) {
@@ -52,17 +52,19 @@ class ReviewChart extends Component {
         });
     }
     render() {
-        const studySessionReviews = getReviewSchedule({
-                batchSize: this.state.batch,
+        const studySessionReviews = reviews.getReviewSchedule({
+                batchSize: this.state.batchSize,
                 totalDays: this.state.totalDays,
                 errorRate: this.state.errorRate,
                 intervalMode: this.state.intervalMode
-            }),
+            }) || [],
             plotX = studySessionReviews
                 .map((item, index) => index + 1),
             plotReviewCardsY = studySessionReviews,
             plotNewCardsY = Array(studySessionReviews.length)
-                .fill(this.state.batch);
+                .fill(this.state.batchSize),
+            maxReviews = Math.max(...studySessionReviews);
+
         const settingsForm = () => {
             const modeSwitch = () => {
                 const validModes = Object.keys(intervalModes)
@@ -90,7 +92,7 @@ class ReviewChart extends Component {
                                 type="number"
                                 min="0"
                                 max="200"
-                                value={this.state.batch}
+                                value={this.state.batchSize}
                                 onChange={this.updateBatch}
                             />
                         </label>
@@ -122,7 +124,8 @@ class ReviewChart extends Component {
                         Scheduling Mode:
                         {modeSwitch()}
                     </label>
-                    <p>At that rate, you will learn {this.state.batch * this.state.totalDays} new cards.</p>
+                    <p>{reviews.getResultString(this.state.batchSize, this.state.totalDays)}</p>
+                    <p>{reviews.getMaxReviewString(maxReviews, this.state.errorRate)}</p> 
                 </form>
             );
         };
@@ -159,7 +162,7 @@ class ReviewChart extends Component {
     }
 }
 ReviewChart.propTypes = {
-    batch: PropTypes.number,
+    batchSize: PropTypes.number,
     totalDays: PropTypes.number,
     errorRate: PropTypes.number,
     intervalMode: PropTypes.string
