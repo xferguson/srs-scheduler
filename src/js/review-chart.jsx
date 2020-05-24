@@ -53,13 +53,11 @@ class ReviewChart extends Component {
     }
     render() {
         const studySessionReviews = getReviewSchedule(this.state.batch, this.state.totalDays, this.state.errorRate, this.state.intervalMode),
-            plotX = [...Array(studySessionReviews.length)
-                .fill(undefined)
-                .map((item, index) => index + 1)
-            ],
-            plotReviewCardsY = [...studySessionReviews],
-            plotNewCardsY = [...Array(studySessionReviews.length)
-                .fill(this.state.batch)];
+            plotX = studySessionReviews
+                .map((item, index) => index + 1),
+            plotReviewCardsY = studySessionReviews,
+            plotNewCardsY = Array(studySessionReviews.length)
+                .fill(this.state.batch);
         const settingsForm = () => {
             const modeSwitch = () => {
                 const validModes = Object.keys(intervalModes)
