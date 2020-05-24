@@ -1,8 +1,11 @@
 /* eslint-env node */
 const Card = require("./card.js");
 
-const CONSTANTS = require("./constants.js");
-const intervalModes = CONSTANTS.intervalModes;
+const intervalModes = {
+    Memrise: [1, 1, 6, 12, 24, 48, 96, 180],
+    ClozeMaster: [1, 10, 30, 180],
+    Anki: []
+};
 
 const getReviewSchedule = ({batchSize = 20, totalDays = 90, errorRate = 0, intervalMode = "Memrise"}) => {
     const intervals = intervalModes.hasOwnProperty(intervalMode) && intervalModes[intervalMode];
@@ -31,6 +34,7 @@ const getResultString = (batchSize, totalDays) => `At this rate you will learn $
 const getMaxReviewString = (maxReviews, errorRate) =>`Your busiest review day will contain ${maxReviews} card${maxReviews === 1 ? "" : "s"}.${errorRate > 0 ? " (approximation)" : ""}`;
 
 module.exports = {
+    intervalModes,
     getReviewSchedule,
     getResultString,
     getMaxReviewString

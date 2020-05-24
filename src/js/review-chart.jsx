@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Plot from "react-plotly.js"; 
 import reviews from "./review";
-import { intervalModes } from "./constants.js";
 
 const parseToNumber = (val) => isNaN(parseInt(val, 10)) ? null : parseInt(val, 10);
 
@@ -67,8 +66,8 @@ class ReviewChart extends Component {
 
         const settingsForm = () => {
             const modeSwitch = () => {
-                const validModes = Object.keys(intervalModes)
-                    .filter((key) => intervalModes.hasOwnProperty(key) && intervalModes[key].length > 0);
+                const validModes = Object.keys(reviews.intervalModes)
+                    .filter((key) => reviews.intervalModes.hasOwnProperty(key) && reviews.intervalModes[key].length > 0);
                 return validModes.length > 1 && validModes.map((mode, index) => {
                         return (
                             <div key={index}>
