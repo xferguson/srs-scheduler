@@ -1,19 +1,24 @@
 /* eslint-env node */
-import Batch from "./batch.js";
+import Card from "./card.js";
 import { intervalModes } from "./constants.js";
 
 export const getReviewSchedule = (batchSize, days, mode = "Memrise") => {
     const intervals = intervalModes.hasOwnProperty(mode) && intervalModes[mode];
     if (intervals) {
-        let dailyBatches = [];
+        let dailyCards = [];
         let reviewsByDay = [0];
 
         for (let i = 0; i < days; i++) {
-            dailyBatches.push(new Batch(batchSize, intervals));
-            for (var d = 0; d < dailyBatches.length; d++) {
-                reviewsByDay[i] = reviewsByDay[i] ? reviewsByDay[i] + dailyBatches[d].reviewsToday() : 0 + dailyBatches[d].reviewsToday();
-                dailyBatches[d].advanceInterval();
+            reviewsByDay[i] = 0;
+            for (let j = 0; j < batchSize; j++) {
+                dailyCards.push(new Card(intervals));
             }
+            dailyCards.forEach(card => {
+                if (card.reviewToday()) {
+                    reviewsByDay[i]++;
+                }
+                card.advanceInterval();
+            });
         }
 
         return reviewsByDay;

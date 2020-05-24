@@ -1,32 +1,32 @@
 /* eslint-env node */
-class Batch {
-    constructor(batchSize, intervals) {
-        this.batchSize = batchSize;
+class Card {
+    constructor(intervals) {
         this.intervals = intervals;
         this.interval = 0;
         this.daysUntilReview = intervals[0];
     }
 
-    reviewsToday() {
-        if (this.daysUntilReview === 0) {
-            return this.batchSize;
-        } else {
-            return 0;
-        }
+    reviewToday() {
+        return this.daysUntilReview === 0;
     }
 
     advanceInterval() {
         if (this.daysUntilReview > 0) {
-            this.daysUntilReview = this.daysUntilReview - 1;
+            this.daysUntilReview--;
         } else {
-            this.interval = this.interval + 1;
             if (this.interval < this.intervals.length) {
+                this.interval++;
                 this.daysUntilReview = this.intervals[this.interval];
             } else {
                 this.daysUntilReview = this.intervals[this.intervals.length - 1];
             }
         }
     }
+
+    resetReviews() {
+        this.interval = 0;
+        this.daysUntilReview = this.intervals[0];
+    }
 }
 
-module.exports = Batch;
+module.exports = Card;
