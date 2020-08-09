@@ -8,7 +8,11 @@ const intervalModes = {
 };
 
 const getReviewSchedule = ({batchSize = 20, totalDays = 90, errorRate = 0, intervalMode = "Memrise"}) => {
-    const intervals = intervalModes.hasOwnProperty(intervalMode) && intervalModes[intervalMode];
+    if (!intervalModes.hasOwnProperty(intervalMode)) {
+      const validValues = Object.keys(intervalModes)
+      throw new Error(`Invalid interval mode: ${intervalMode}. Valid values: ${validValues}`)
+    }
+    const intervals = intervalModes[intervalMode];
     let reviewsByDay = [0];
     if (intervals) {
         let dailyCards = [];
