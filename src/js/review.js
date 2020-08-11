@@ -53,7 +53,10 @@ const getReviewSchedule = ({
     return reviewsByDay;
 };
 
-const getResultString = (batchSize, totalDays, learningDays) => `At this rate you will learn ${batchSize * learningDays} new cards in ${totalDays} day${totalDays === 1 ? "" : "s"}.`;
+const getResultString = (batchSize, totalDays, daysPerWeek) => {
+  const totalLearningDays = getLearningDays(totalDays, daysPerWeek).length;
+  return `At this rate you will learn ${batchSize * totalLearningDays} new cards in ${totalDays} day${totalDays === 1 ? "" : "s"}.`;
+};
 
 const getMaxReviewString = (maxReviews, errorRate) =>`Your busiest review day will contain ${maxReviews} card${maxReviews === 1 ? "" : "s"}.${errorRate > 0 ? " (approximation)" : ""}`;
 

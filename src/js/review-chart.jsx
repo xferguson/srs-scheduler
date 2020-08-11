@@ -14,6 +14,7 @@ class ReviewChart extends Component {
         this.state = {
             batchSize: props.batchSize,
             totalDays: props.totalDays,
+            learningDaysPerWeek: props.learningDaysPerWeek,
             errorRate: props.errorRate,
             intervalMode: props.intervalMode
         };
@@ -21,6 +22,7 @@ class ReviewChart extends Component {
         /* Bindings */
         this.updateBatch = this.updateBatch.bind(this);
         this.updateTotalDays = this.updateTotalDays.bind(this);
+        this.updateLearningDaysPerWeek = this.updateLearningDaysPerWeek.bind(this);
         this.updateErrorRate = this.updateErrorRate.bind(this);
         this.updateIntervalMode = this.updateIntervalMode.bind(this);
 
@@ -37,6 +39,12 @@ class ReviewChart extends Component {
         this.setState({
             totalDays: newTotalDays
         });
+    }
+    updateLearningDaysPerWeek(event) {
+      const newLearningDays = parseToNumber(event.target.value);
+      this.setState({
+        learningDaysPerWeek: newLearningDays
+      });
     }
     updateErrorRate(event) {
         const newErrorRate = parseToNumber(event.target.value);
@@ -55,7 +63,8 @@ class ReviewChart extends Component {
                 batchSize: this.state.batchSize,
                 totalDays: this.state.totalDays,
                 errorRate: this.state.errorRate,
-                intervalMode: this.state.intervalMode
+                intervalMode: this.state.intervalMode,
+                learningDaysPerWeek: this.state.learningDaysPerWeek,
             }) || [],
             plotX = studySessionReviews
                 .map((item, index) => index + 1),
@@ -110,6 +119,18 @@ class ReviewChart extends Component {
                     </div>
                     <div>
                         <label>
+                            Learning Days per Week:
+                            <input
+                                type="number"
+                                min="0"
+                                max="7"
+                                value={this.state.learningDaysPerWeek}
+                                onChange={this.updateLearningDaysPerWeek}
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <label>
                             Error Rate (% of cards wrong per day):
                             <input
                                 type="number"
@@ -123,7 +144,7 @@ class ReviewChart extends Component {
                         Scheduling Mode:
                         {modeSwitch()}
                     </label>
-                    <p>{reviews.getResultString(this.state.batchSize, this.state.totalDays)}</p>
+                    <p>{reviews.getResultString(this.state.batchSize, this.state.totalDays, this.state.learningDaysPerWeek)}</p>
                     <p>{reviews.getMaxReviewString(maxReviews, this.state.errorRate)}</p> 
                 </form>
             );
@@ -163,6 +184,7 @@ class ReviewChart extends Component {
 ReviewChart.propTypes = {
     batchSize: PropTypes.number,
     totalDays: PropTypes.number,
+    learningDaysPerWeek: PropTypes.number,
     errorRate: PropTypes.number,
     intervalMode: PropTypes.string
 };
