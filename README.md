@@ -1,7 +1,7 @@
 # SRS Scheduler
 This is just a simple js script to run in node where you supply a number of flash cards to learn per day, how many days you intend to learn them, and which system you will be using (currently just "Memrise" and "ClozeMaster", defaulting to "Memrise"). It then spits out a schedule so you can see how many cards you will have to review each day.
 
-run with `npm start [batchSize] [totalDays] [errorRate] [intervalMode]`
+run with `npm start [batchSize] [totalDays] [errorRate] [intervalMode] [learningDaysPerWeek - optional]`
 
 The SRS algorithms were taken from the Memrise website message boards and the Clozemaster website.
 

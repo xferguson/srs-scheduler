@@ -6,7 +6,8 @@ import ReviewChart from "./review-chart.jsx";
 const batchSize = 20,
     totalDays = 90,
     errorRate = 0,
-    intervalMode = "Memrise";
+    intervalMode = "Memrise",
+    learningDaysPerWeek = 7;
 
 ReactDOM.render(
     <ReviewChart
@@ -14,6 +15,7 @@ ReactDOM.render(
         totalDays={totalDays}
         errorRate={errorRate}
         intervalMode={intervalMode}
+        learningDaysPerWeek={learningDaysPerWeek}
     />,
     document.getElementById("root")
 );
